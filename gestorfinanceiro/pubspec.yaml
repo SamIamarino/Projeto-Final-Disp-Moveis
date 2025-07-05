@@ -1,0 +1,28 @@
+name: gestorfinanceiro
+description: Personal Money Manager (college project)
+publish_to: "none"        # remove if you plan to publish
+
+environment:
+  sdk: ">=3.4.0 <4.0.0"
+
+# ——— 3rd‑party packages go HERE ———
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Add your packages *one level in* from 'dependencies'
+  sqflite: ^2.3.2
+  path_provider: ^2.1.2
+  path: ^1.9.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+
+  # If you add images/fonts later, list them here:
+  # assets:
+  #   - assets/images/
