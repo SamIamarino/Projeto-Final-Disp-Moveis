@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gestorfinanceiro/views/screens/grafics_expense_screen.dart';
 import '../../controllers/expense_controller.dart';
 import '../../models/expense.dart';
 import '../widgets/expense_tile.dart';
@@ -29,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('My Expenses')),
+      appBar: AppBar(title: const Text('Meus Gastos')),
       body: FutureBuilder<List<Expense>>(
         future: _futureExpenses,
         builder: (context, snapshot) {
@@ -38,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           final data = snapshot.data ?? [];
           if (data.isEmpty) {
-            return const Center(child: Text('No expenses yet.'));
+            return const Center(child: Text('Sem gastos registrados ainda!'));
           }
           return ListView.builder(
             itemCount: data.length,
@@ -52,15 +53,43 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final added = await Navigator.push<bool>(
-            context,
-            MaterialPageRoute(builder: (_) => const AddExpenseScreen()),
-          );
-          if (added == true) _refresh();
-        },
-        child: const Icon(Icons.add),
+      // Use a Stack to position multiple FloatingActionButtons
+      floatingActionButton: Stack(
+        children: <Widget>[
+          // Bottom Right FloatingActionButton (existing)
+          Positioned(
+            bottom: 12.0, // Adjust as needed
+            right: 10.0, // Adjust as needed
+            child: FloatingActionButton(
+                onPressed: () async {
+                  final added = await Navigator.push<bool>(
+                    context,
+                    MaterialPageRoute(builder: (_) => const AddExpenseScreen()),
+                  );
+                  if (added == true) _refresh();
+                },
+                child: const Icon(Icons.add),
+                backgroundColor: Colors.lightGreen.shade200),
+          ),
+          // Bottom Left FloatingActionButton (new)
+          Positioned(
+            bottom: 12.0, // Adjust as needed
+            left: 40.0, // Adjust as needed
+            child: FloatingActionButton(
+              onPressed: () async {
+                await Navigator.push<bool>(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const GraphicsExpenseScreen(),
+                  ),
+                );
+              },
+              heroTag: "bottomLeftBtn", // Crucial for multiple FABs
+              child: const Icon(Icons.filter_list), // Example icon
+              backgroundColor: Colors.lightGreen.shade200,
+            ),
+          ),
+        ],
       ),
     );
   }
