@@ -39,7 +39,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Add Expense')),
+      appBar: AppBar(title: const Text('Adicionar Gasto')),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
@@ -48,22 +48,29 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
             children: [
               TextFormField(
                 controller: _titleCtrl,
-                decoration: const InputDecoration(labelText: 'Title'),
+                decoration: const InputDecoration(labelText: 'Nome do Gasto'),
                 validator: (v) => v!.isEmpty ? 'Required' : null,
               ),
               TextFormField(
                 controller: _amountCtrl,
-                decoration: const InputDecoration(labelText: 'Amount'),
+                decoration:
+                    const InputDecoration(labelText: 'Quantidade BRL R\$'),
                 keyboardType: TextInputType.number,
                 validator: (v) =>
                     double.tryParse(v ?? '') == null ? 'Enter a number' : null,
               ),
               TextFormField(
                 controller: _categoryCtrl,
-                decoration: const InputDecoration(labelText: 'Category'),
+                decoration: const InputDecoration(labelText: 'Categoria'),
               ),
               const SizedBox(height: 24),
-              ElevatedButton(onPressed: _save, child: const Text('Save')),
+              ElevatedButton(
+                onPressed: _save,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.lightGreen.shade200,
+                ),
+                child: const Text('Salvar Gasto'),
+              )
             ],
           ),
         ),
