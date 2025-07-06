@@ -4,7 +4,8 @@ import '../../models/expense.dart';
 class ExpenseTile extends StatelessWidget {
   final Expense expense;
   final VoidCallback onDelete;
-  const ExpenseTile({super.key, required this.expense, required this.onDelete});
+  final VoidCallback onChange;
+  const ExpenseTile({super.key, required this.expense, required this.onDelete, required this.onChange});
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +15,7 @@ class ExpenseTile extends StatelessWidget {
           Text('${expense.category} • ${expense.date.toLocal()}'.split(' ')[0]),
       trailing: Text('R\$ ${expense.amount.toStringAsFixed(2)}'),
       onLongPress: onDelete,
+      onTap: onChange,
     );
   }
 }

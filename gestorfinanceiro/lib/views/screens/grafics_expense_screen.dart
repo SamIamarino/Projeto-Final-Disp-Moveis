@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../../controllers/expense_controller.dart';
 import '../../models/expense.dart';
-import 'dart:math' show Random; // For random colors
+// For random colors
 
 class GraphicsExpenseScreen extends StatefulWidget {
   const GraphicsExpenseScreen({super.key});

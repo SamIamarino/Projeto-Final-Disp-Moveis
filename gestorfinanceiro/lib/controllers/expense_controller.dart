@@ -9,4 +9,6 @@ class ExpenseController {
   Future<List<Expense>> getAllExpenses() => _db.fetchExpenses();
 
   Future<void> removeExpense(int id) => _db.deleteExpense(id);
+
+  Future<void> changeExpense(Expense e) => _db.updateExpense(e);
 }

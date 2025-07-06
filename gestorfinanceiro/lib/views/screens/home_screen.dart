@@ -27,6 +27,65 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {}); // triggers rebuild
   }
 
+  Future<Expense?> _showEditDialog(BuildContext context, Expense expense){
+
+    final titleController = TextEditingController(text: expense.title);
+    final amountController = TextEditingController(text: expense.amount.toString());
+    final categoryController = TextEditingController(text: expense.category);
+
+    return showDialog<Expense>(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: const Text('Editar Despesa'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              TextField(
+                controller:titleController,
+                decoration: const InputDecoration( labelText: 'Nome'),
+              ),
+              TextField(
+                controller: amountController,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration( labelText: 'Valor'),
+              ),
+              TextField(
+                controller: categoryController,
+                decoration: const InputDecoration( labelText: 'Categoria'),
+              )
+            ]
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: (){
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancelar'),
+            ),
+            ElevatedButton(
+              onPressed: (){
+                final updatedExpense = Expense(
+                  id: expense.id,
+                  title: titleController.text, 
+                  amount: double.tryParse(amountController.text) ?? expense.amount, 
+                  category: categoryController.text, 
+                  date: expense.date
+                );
+                Navigator.of(context).pop(updatedExpense);
+              },
+              child: const Text('Salvar'),
+            ),
+          ],
+        );
+
+      }
+      
+    );
+
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,8 +105,48 @@ class _HomeScreenState extends State<HomeScreen> {
             itemBuilder: (_, i) => ExpenseTile(
               expense: data[i],
               onDelete: () async {
-                await _controller.removeExpense(data[i].id!);
-                _refresh();
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext context) {
+                    return  AlertDialog(
+                      title: Text('Confirmar Exclusão?'),
+                      content: SingleChildScrollView(
+                        child: ListBody(
+                          children: <Widget>[
+                            Text('Tem certeza que deseja excluir este item?'),
+                          ],
+                        ),
+                      ),
+                      actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('Cancelar'), 
+                      ),
+                      TextButton(
+                      onPressed: () async {
+                          await _controller.removeExpense(data[i].id!);
+                          _refresh();
+                          Navigator.of(context).pop();
+                      },
+                      child: const Text('Excluir'))
+                      ],
+                    );
+                  }
+                );
+              },
+              onChange: () async {
+
+                final updatedExpense = await _showEditDialog(context, data[i]);
+
+                if(updatedExpense != null){
+
+                  await _controller.changeExpense(updatedExpense);
+                  _refresh();
+
+                }
               },
             ),
           );
@@ -68,8 +167,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                   if (added == true) _refresh();
                 },
-                child: const Icon(Icons.add),
-                backgroundColor: Colors.lightGreen.shade200),
+                backgroundColor: Colors.lightGreen.shade200,
+                child: const Icon(Icons.add)),
           ),
           // Bottom Left FloatingActionButton (new)
           Positioned(
@@ -84,9 +183,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 );
               },
-              heroTag: "bottomLeftBtn", // Crucial for multiple FABs
-              child: const Icon(Icons.filter_list), // Example icon
-              backgroundColor: Colors.lightGreen.shade200,
+              heroTag: "bottomLeftBtn", // Example icon
+              backgroundColor: Colors.lightGreen.shade200, // Crucial for multiple FABs
+              child: const Icon(Icons.filter_list),
             ),
           ),
         ],
