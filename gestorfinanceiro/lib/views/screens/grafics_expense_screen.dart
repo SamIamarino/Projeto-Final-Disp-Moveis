@@ -218,20 +218,7 @@ class _GraphicsExpenseScreenState extends State<GraphicsExpenseScreen> {
               },
               heroTag: "refreshGraphicBtn",
               child: const Icon(Icons.refresh),
-            ),
-          ),
-          Positioned(
-            bottom: 12.0,
-            left: 40.0,
-            child: FloatingActionButton(
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                      content: Text('Opções de gráfico (filtro, tipo)')),
-                );
-              },
-              heroTag: "graphicOptionsBtn",
-              child: const Icon(Icons.settings),
+              backgroundColor: Colors.lightGreen.shade200, // Custom color
             ),
           ),
         ],
