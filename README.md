@@ -226,28 +226,6 @@ class Expense {
 - Manter consistência na nomenclatura
 - Usar widgets construtores quando possível
 
-## 📄 Licença
-
-Este projeto foi desenvolvido para fins acadêmicos como projeto final da matéria Dispositivos Móveis.
-
-## 👥 Autores
-
-- **Samuel Iamarino** - *Desenvolvedor Principal* - [@SamIamarino](https://github.com/SamIamarino)
-
-## 🙏 Agradecimentos
-
-- Professor e colegas da disciplina Dispositivos Móveis
-- Comunidade Flutter pela documentação e recursos
-- Desenvolvedores das bibliotecas utilizadas
-
-## 📞 Contato
-
-Para dúvidas, sugestões ou colaborações:
-
-- GitHub: [@SamIamarino](https://github.com/SamIamarino)
-- Repository: [Projeto-Final-Disp-Moveis](https://github.com/SamIamarino/Projeto-Final-Disp-Moveis)
-
----
 
 <div align="center">
 
